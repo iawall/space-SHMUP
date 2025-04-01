@@ -10,6 +10,7 @@
     public int         score = 100;      // Points earned for destroying this
     // This is a Property: A method that acts like a field
      public float      showDamageDuration = 0.1f; // # seconds to show damage //a
+    public float      powerUpDropChance = 1f;
     [Header("Set Dynamically: Enemy")]
     public Color[]    originalColors;
     public Material[] materials;// All the Materials of this & its children
@@ -83,7 +84,14 @@ Vector3 tempPos = pos;
                 if (health <= 0) {                                           //d
                     // Destroy this Enemy
                     Destroy(this.gameObject);
+                     if (!notifiedOfDestruction){ 
+                        Main.S.shipDestroyed( this ); 
+                    } 
+                    notifiedOfDestruction = true; 
+                    // Destroy this Enemy 
+                    Destroy(this.gameObject); 
                 }
+                
                 Destroy( otherGO );                                          //e
                 break;
             default:
