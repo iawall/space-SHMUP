@@ -16,13 +16,18 @@ using System.Collections;
     private float _shieldLevel = 1;
   //  public float   shieldLevel = 1;
     private GameObject lastTriggerGo = null; 
+
+     // Declare a new delegate type WeaponFireDelegate 
+    public delegate void WeaponFireDelegate();                               //a 
+    // Create a WeaponFireDelegate field named fireDelegate. 
+    public WeaponFireDelegate fireDelegate;
     void Awake() {
         if (S == null) {
         S = this; // Set the Singleton                                    // a
-    } else {
-        Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
     }
+    //fireDelegate += TempFire;
  }
+ 
  
 void Update () {
     // Pull in information from the Input class
@@ -36,18 +41,26 @@ void Update () {
     // Rotate the ship to make it feel more dynamic                      // c
     transform.rotation = Quaternion.Euler(yAxis*pitchMult,xAxis*rollMult,0);
 
-     if ( Input.GetKeyDown( KeyCode.Space ) ) {                            //
-            TempFire();
-        }
+    // if ( Input.GetKeyDown( KeyCode.Space ) ) {                            //
+     //      TempFire();
+     //   }
+        if (Input.GetAxis("Jump") == 1 && fireDelegate != null) {            //d 
+            fireDelegate();  
     }
 
-
+}
     void TempFire() {                                                        //
  
         GameObject projGO = Instantiate<GameObject>( projectilePrefab );
         projGO.transform.position = transform.position;
         Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-        rigidB.linearVelocity = Vector3.up * projectileSpeed;
+        ///rigidB.linearVelocity = Vector3.up * projectileSpeed;
+        Projectile proj = projGO.GetComponent<Projectile>();                 //h 
+        proj.type = WeaponType.blaster; 
+        float tSpeed = Main.GetWeaponDefinition( proj.type ).velocity; 
+        rigidB.linearVelocity = Vector3.up * tSpeed; 
+
+
     }
 
 
