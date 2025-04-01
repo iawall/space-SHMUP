@@ -9,6 +9,7 @@
     public float             enemySpawnPerSecond = 0.5f; // # Enemies/second
 
     public float             enemyDefaultPadding = 1.5f; // Padding for position
+    public WeaponDefinition[] weaponDefinitions;
     private BoundsCheck      bndCheck;
     void Awake() {
         S = this;

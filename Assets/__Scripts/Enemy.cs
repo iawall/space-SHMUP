@@ -9,7 +9,7 @@
     public float      health = 10;
     public int         score = 100;      // Points earned for destroying this
     // This is a Property: A method that acts like a field
-    private BoundsCheck bndCheck;
+    protected BoundsCheck bndCheck;
     void Awake()
     {
      bndCheck = GetComponent<BoundsCheck>();   
